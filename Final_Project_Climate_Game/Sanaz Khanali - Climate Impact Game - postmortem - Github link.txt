@@ -1,0 +1,42 @@
+# Climate Impact Game
+
+# link to public Github repository: 
+Path: Final_Project_Climate_Game/Final_Project_Climate_Game.pyde
+Linke: https://github.com/sun1771/Final_Project_Climate_Game/blob/main/Final_Project_Climate_Game/Final_Project_Climate_Game.pyde
+
+# team members: Sanaz Khanali, Menna Hendawy
+
+# 12/08/2023 - 12/15/2023
+
+# Climate Impact Game Controls
+# after pressing key 's' countdown would start
+# after the countdown the player should:
+# press the keys '1', '2', '3', '4' to move the people to the upper elevation (Safe zone)
+# press 'Space' simultaniously to reduce the CO2 emission to buy some time to move the people above safe zone
+# Win: if the player could move all the people successfully to upland 
+# lose: if people drown
+# in both cases by pressing's' the game would restart
+
+# the things that went well:
+# we were able to achieve all the objectives we defined in the proposal. the only thing we wanted to include extra was a button instead of kepressed for reducing the CO2 emission (slowing down the rain and sea level rise)
+# And we included that in the TODO for future steps
+
+challenges faced:
+# challenge 1 (defining sea level rise):
+  initially, we initialized the sea level to rise by millis
+  then realized that it starts to increase the sea level right after we hit run (starting the program)
+  but we wanted the sea level to rise once the game state is in the race state
+  therefore we defined a 'gameStart' variable and set it to millis after changing the game state to state race at the end of state countdown
+  And calculated the sea level rise in the update method of 'seaLevel' class by calculating the seconds passed since start (subtracting millis from 'gameStart')
+
+# challenge 2 (reset the game):
+  initially, once game went to game over or success state, although we changed the game state back to state init, the game wouldn't start correctly because the millis already passed and after the game directly goes to game over 
+  Therefore, we defined a reset function to set everything to their initial values, and called that resetGame function in setup and in the success and gameover state after pressing key 's'
+
+# challenge 3 (moving the people on the angle):
+  initially, I started to calculate each player's initiall location as a PVector in the list of players. and then update their location in the player class. But then it was so hard to calculate X and Y position of each player one by one so,
+  so I tried to create the formula for X and Y positions that works for all the players in the calculateAbsolutePos() method of player class (since all of them would move on the same line) and only give their X position in the list of players. and that way the class would automatically calculate and update their locations  
+
+#TODO
+#1 Design a button instead of keypressed for reducing CO2 emission
+#2 improve the graphics
