@@ -4,7 +4,7 @@
 
 # 12/08/2023 - 12/15/2023
 
-# Climate Impact Game Controls
+# Climate Impact Game Controls:
 # after pressing key 's' countdown would start
 # after the countdown the player should:
 # press the keys '1', '2', '3', '4' to move the people to the upper elevation (Safe zone)
