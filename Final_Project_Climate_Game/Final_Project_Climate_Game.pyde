@@ -64,7 +64,6 @@ def setup():
     
 def draw():
     background(112, 129, 135)
-    print("game state is: ", gameState)
     for player in players:
         player.render()
     
@@ -73,13 +72,6 @@ def draw():
     triangle(400, 640, 650, 640, 650, 500)
     rect(650, 500, 650, 140)
     triangle(650, 500, 1250, 500, 1250, 300)
-    
-    # pushMatrix()
-    # translate(1250, 300)
-    # rotate(PI/2.5)
-    # rect(50, 0, 1500, 2000)
-    # popMatrix()
-    # #rect(400, 500, 500, 500)
 
     if gameState == STATE_INIT:
         handleStateInit()
@@ -114,12 +106,8 @@ def handleStateCountDown():
     
 def handleStateRace():
     global gravityValue, gameState
-    # rect(0, 500, millis(), 40)
-    # fill(50, 100, 255)
-    # rect(0, 640, 1250, - millis()*0.01)
     seaLevel.update()
-    seaLevel.render()
-    # Spawn Rain   
+    seaLevel.render()  
     fill(0, 255, 0)
     rect(0, height/2 + 40, 1250, 5)
     textSize(32 )
@@ -127,6 +115,8 @@ def handleStateRace():
     textAlign(CENTER)  
     fill(0)
     text("Press Space to decrease CO2 emission", width/2, 100) 
+    text("Press 1, 2, 3, 4 keys to move the people to safe zone!", width/2, 150)
+    #spawn rain
     for i in range(5):
         tempPos = PVector(random(-width,2*width) ,0)
         newRainDrop = RainDrop(tempPos)
@@ -140,14 +130,8 @@ def handleStateRace():
     for player in players:
         if player.calculateAbsolutePos().y < (height/2):
             gameState = STATE_SUCCESS 
-    # if keyPressed:
-    #     if keyCode == RIGHT:
-    #         if gravityValue > 2.00:
-    #             gravityValue -= 0.05
-    # elif gravityValue <= 10.00:
-    #     gravityValue += 0.05
     
-    # Increase the speed of rain
+    # increase the speed of rain        
     if gravityValue <= 10.00:
         gravityValue += 0.05
 
@@ -168,7 +152,6 @@ def handleGameSuccess():
     textSize(32)
     text("Press S to start", width/2, height/2 + 50)
     
-    
 def resetGame():
     global seaLevel, players
     seaLevel = SeaLevel()
@@ -182,7 +165,6 @@ def keyPressed():
     global gameState, countDownStartTime, earlyStart, gravityValue
     if key == ' ':
         if gameState == STATE_INIT:
-            print("changing state")
             gameState = STATE_COUNTDOWN
             countDownStartTime = millis()
             
@@ -198,7 +180,6 @@ def keyPressed():
         elif key == ' ':
             if gravityValue > 2.00:
                 gravityValue -= 1.0
-                # print("new gravityValue is: ", gravityValue)
 
     if gameState == STATE_GAME_OVER or gameState == STATE_SUCCESS:
         if key == "s" or key == "S":
@@ -233,7 +214,6 @@ class SeaLevel(object):
     def update(self):
         secondsSinceStart = (millis() - gameStart) / 50
         self.h = secondsSinceStart + gravityValue
-        print("my sealevel height is: ", height - self.h)
     def render(self):
         fill(103, 193, 202)
         rect(0, 640, 1250, -self.h)
@@ -262,8 +242,6 @@ class Player(object):
         rectMode(CORNER)
         if self.calculateAbsolutePos().y > (height - seaLevel.h):
             gameState = STATE_GAME_OVER
-        # elif self.calculateAbsolutePos().y < (height/2):
-        #     gameState = STATE_SUCCESS
 
     def calculateAbsolutePos(self):
         absoluteX = landStartPosition.x + self.x
